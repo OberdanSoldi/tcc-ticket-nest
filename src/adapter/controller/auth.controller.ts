@@ -18,4 +18,10 @@ export class AuthController {
       .json(await this.authService.signIn(signIn))
       .end();
   }
+
+  @Roles(Role.ADMIN)
+  @Get('admin')
+  async test() {
+    return 'rogerkkk';
+  }
 }
