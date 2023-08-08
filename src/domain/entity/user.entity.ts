@@ -1,5 +1,4 @@
-import { Role, User } from "@prisma/client";
-import { TicketEntity } from "./ticket.entity";
+import { Role, User } from '@prisma/client';
 
 export interface UserEntity extends User {
   id: string;
@@ -7,5 +6,4 @@ export interface UserEntity extends User {
   name: string;
   email: string;
   password: string;
-  tickets: TicketEntity[]
 }

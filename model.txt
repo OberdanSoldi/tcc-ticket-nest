@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = "postgresql://soldi:08n4fy8nNOF8kWtUmI2xPQ@ticket-dev-1089.g8x.cockroachlabs.cloud:26257/ticket?sslmode=verify-full"
+}
+
+model Hello {
+  id      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  message String   @db.String(100)
+  date    DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String   @db.String(100)
+  email        String   @db.String(100)
+  password     String   @db.String()
+  user_tickets Ticket[] @relation("user")
+  assigned     Ticket[] @relation("assignee")
+  tickets      Ticket   @relation(fields: [tickets_id], references: [id])
+  tickets_id   String   @db.Uuid
+  role         Role
+}
+
+model Ticket {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  description  String   @db.String()
+  date         DateTime @default(now()) @db.Timestamptz(6)
+  user         User     @relation("user", fields: [userId], references: [id])
+  userId       String   @db.Uuid
+  assignee     User     @relation("assignee", fields: [assigneeId], references: [id])
+  assigneeId   String   @db.Uuid
+  status       Status
+  priority     Priority
+  computer_id  String   @db.String(100)
+  user_tickets User[]
+}
+
+enum Status {
+  OPEN
+  ASSIGNED
+  CLOSED
+}
+
+enum Priority {
+  URGENT
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Role {
+  USER
+  ADMIN
+  TECHNICIAN
+}
