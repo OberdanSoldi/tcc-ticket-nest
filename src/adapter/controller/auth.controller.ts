@@ -18,10 +18,4 @@ export class AuthController {
       .json(await this.authService.signIn(signIn))
       .end();
   }
-
-  @Roles(Role.USER)
-  @Get('roger')
-  async sim() {
-    return 'asdasdasdasd';
-  }
 }
