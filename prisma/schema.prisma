@@ -21,6 +21,19 @@ model User {
   role         Role
 }
 
+model Invite {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hash         String
+  email        String
+  status       InviteStatus
+  date         DateTime @default(now()) @db.Timestamptz(6)
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+}
+
 enum Role {
   USER
   ADMIN

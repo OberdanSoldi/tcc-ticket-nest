@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../../adapter/repository/user.repository';
 import { UserConverter } from '../converter/user.converter';
-import { UserRequestEntity } from '../../domain/request/user/userRequest.entity';
-import { UserResponseEntity } from '../../domain/response/user/userResponse.entity';
+import { UserRequestDto } from '../../domain/dto/request/user/userRequest.dto';
+import { UserResponseDto } from '../../domain/dto/response/user/userResponse.dto';
 
 @Injectable()
 export class UserService {
@@ -11,11 +11,11 @@ export class UserService {
     private userConverter: UserConverter,
   ) {}
 
-  async create(request: UserRequestEntity): Promise<void> {
+  async create(request: UserRequestDto): Promise<void> {
     await this.userRepository.create(this.userConverter.toEntity(request));
   }
 
-  async findOne(email: string): Promise<UserResponseEntity> {
+  async findOne(email: string): Promise<UserResponseDto> {
     return this.userConverter.toResponse(
       await this.userRepository.findOne(email),
     );

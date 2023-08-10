@@ -1,6 +1,7 @@
 import { Role } from '@prisma/client';
 
-export interface UserRequestEntity {
+export class UserResponseDto {
+  id: string;
   role: Role;
   name: string;
   email: string;

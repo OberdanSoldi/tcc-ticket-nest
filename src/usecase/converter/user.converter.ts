@@ -2,15 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { v4 as UUID } from 'uuid';
 import { AbstractConverter } from './AbstractConverter';
 import { UserEntity } from '../../domain/entity/user.entity';
-import { UserRequestEntity } from '../../domain/request/user/userRequest.entity';
-import { UserResponseEntity } from '../../domain/response/user/userResponse.entity';
+import { UserRequestDto } from '../../domain/dto/request/user/userRequest.dto';
+import { UserResponseDto } from '../../domain/dto/response/user/userResponse.dto';
 
 @Injectable()
 export class UserConverter
-  implements
-    AbstractConverter<UserEntity, UserRequestEntity, UserResponseEntity>
+  implements AbstractConverter<UserEntity, UserRequestDto, UserResponseDto>
 {
-  toEntity(request: UserRequestEntity): UserEntity {
+  toEntity(request: UserRequestDto): UserEntity {
     return {
       id: UUID(),
       password: request.password,
@@ -20,7 +19,7 @@ export class UserConverter
     };
   }
 
-  toResponse(entity: UserEntity): UserResponseEntity {
+  toResponse(entity: UserEntity): UserResponseDto {
     return {
       id: entity.id,
       role: entity.role,
