@@ -3,6 +3,7 @@ import { UserRepository } from '../../adapter/repository/user.repository';
 import { UserConverter } from '../converter/user.converter';
 import { UserRequestDto } from '../../domain/dto/request/user/userRequest.dto';
 import { UserResponseDto } from '../../domain/dto/response/user/userResponse.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,9 @@ export class UserService {
   ) {}
 
   async create(request: UserRequestDto): Promise<void> {
-    await this.userRepository.create(this.userConverter.toEntity(request));
+    request.password = await bcrypt.hash(request.password, 10);
+    const convertedUser = this.userConverter.toEntity(request);
+    await this.userRepository.create(convertedUser);
   }
 
   async findOne(email: string): Promise<UserResponseDto> {

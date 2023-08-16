@@ -27,6 +27,7 @@ model Invite {
   email        String
   status       InviteStatus
   date         DateTime @default(now()) @db.Timestamptz(6)
+  role         Role @default(USER)
 }
 
 enum InviteStatus {

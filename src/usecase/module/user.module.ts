@@ -14,5 +14,6 @@ import { UserConverter } from '../converter/user.converter';
     UserConverter,
     DatabaseClient,
   ],
+  exports: [UserService, UserConverter],
 })
 export class UserModule {}

@@ -1,4 +1,4 @@
-import { InviteStatus } from '@prisma/client';
+import { InviteStatus, Role } from '@prisma/client';
 
 export class InviteResponseDto {
   id: string;
@@ -6,4 +6,5 @@ export class InviteResponseDto {
   email: string;
   status: InviteStatus;
   date: Date;
+  role: Role;
 }

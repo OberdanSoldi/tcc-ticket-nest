@@ -18,6 +18,7 @@ export class InviteConverter
       email: request.email,
       date: new Date(),
       status: InviteStatus.PENDING,
+      role: request.role,
     };
   }
 
@@ -28,6 +29,7 @@ export class InviteConverter
       email: entity.email,
       date: entity.date,
       status: entity.status,
+      role: entity.role,
     };
   }
 }

@@ -1,4 +1,4 @@
-import { InviteStatus } from '@prisma/client';
+import { InviteStatus, Role } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class InviteRequestDto {
@@ -7,4 +7,5 @@ export class InviteRequestDto {
   email: string;
   status: InviteStatus;
   date: Date;
+  role: Role;
 }
