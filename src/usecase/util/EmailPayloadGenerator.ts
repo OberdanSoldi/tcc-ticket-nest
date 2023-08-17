@@ -4,7 +4,7 @@ import * as process from 'process';
 class EmailPayloadGenerator {
   private from_email: string = process.env.FROM_EMAIL;
 
-  private generate(email: string, hash: string): string {
+  private generateHtml(email: string, hash: string): string {
     return `
       <strong>${email} | ${hash}</strong>
     `;
@@ -15,7 +15,7 @@ class EmailPayloadGenerator {
       from: this.from_email,
       subject: 'Invite',
       text: 'Invite',
-      html: this.generate(email, hash),
+      html: this.generateHtml(email, hash),
     };
   }
 }

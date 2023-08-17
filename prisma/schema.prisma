@@ -14,20 +14,35 @@ model Hello {
 }
 
 model User {
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name         String   @db.String(100)
-  email        String   @db.String(100) @unique
-  password     String
-  role         Role
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String   @db.String(100)
+  email          String   @unique @db.String(100)
+  password       String
+  role           Role
+  ticketCreator  Ticket[] @relation("creator")
+  ticketAssignee Ticket?  @relation("assignee")
 }
 
 model Invite {
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  hash         String
-  email        String
-  status       InviteStatus
-  date         DateTime @default(now()) @db.Timestamptz(6)
-  role         Role @default(USER)
+  id     String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hash   String
+  email  String
+  status InviteStatus
+  date   DateTime     @default(now()) @db.Timestamptz(6)
+  role   Role         @default(USER)
+}
+
+model Ticket {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  description String   @db.String()
+  date        DateTime @default(now()) @db.Timestamptz(6)
+  status      Status   @default(NOT_DEFINED)
+  priority    Priority @default(NOT_DEFINED)
+  creator     User     @relation(fields: [created_by], references: [id], "creator")
+  assignee    User?    @relation(fields: [assigned_to], references: [id], "assignee")
+  created_by  String   @db.Uuid
+  assigned_to String?  @unique @db.Uuid
+  computer_id String   @db.String(100)
 }
 
 enum InviteStatus {
@@ -39,4 +54,19 @@ enum Role {
   USER
   ADMIN
   TECHNICIAN
+}
+
+enum Status {
+  OPEN
+  ASSIGNED
+  CLOSED
+  NOT_DEFINED
+}
+
+enum Priority {
+  URGENT
+  HIGH
+  MEDIUM
+  LOW
+  NOT_DEFINED
 }
