@@ -13,9 +13,7 @@ export class AuthController {
   @Public()
   @Post('login')
   async signIn(@Res() res: Response, @Body() signIn: SignInRequestDto) {
-    res
-      .status(HttpStatus.OK)
-      .json(await this.authService.signIn(signIn))
-      .end();
+    const accessToken = await this.authService.signIn(signIn);
+    res.status(HttpStatus.OK).json(accessToken).end();
   }
 }

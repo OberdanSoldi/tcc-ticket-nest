@@ -8,5 +8,6 @@ import { TicketConverter } from '../converter/ticket.converter';
 @Module({
   controllers: [TicketController],
   providers: [TicketService, TicketRepository, TicketConverter, DatabaseClient],
+  exports: [TicketService, TicketRepository, TicketConverter],
 })
 export class TicketModule {}

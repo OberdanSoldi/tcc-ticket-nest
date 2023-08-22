@@ -44,4 +44,12 @@ export class TicketRepository {
       data: { assigned_to: assigneeUserId },
     });
   }
+
+  async findAllByUserId(userId: string): Promise<TicketEntity[]> {
+    return this.prisma.ticket.findMany({ where: { created_by: userId } });
+  }
+
+  async findAll(): Promise<TicketEntity[]> {
+    return this.prisma.ticket.findMany();
+  }
 }

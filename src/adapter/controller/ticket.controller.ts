@@ -9,7 +9,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TicketService } from '../../usecase/service/ticket.service';
 import { Request, Response } from 'express';
 import { TicketRequestDto } from '../../domain/dto/request/ticket/ticketRequest.dto';
@@ -41,10 +41,9 @@ export class TicketController {
   async findById(
     @Res() res: Response,
     @Param('id') ticketId: string,
-  ): Promise<TicketResponseDto> {
-    const ticket = this.ticketService.findById(ticketId);
-    res.status(HttpStatus.OK).end();
-    return ticket;
+  ): Promise<void> {
+    const ticket = await this.ticketService.findById(ticketId);
+    res.status(HttpStatus.OK).json(ticket).end();
   }
 
   @Roles(Role.ADMIN)
@@ -78,5 +77,12 @@ export class TicketController {
   ): Promise<void> {
     await this.ticketService.assigneeTicket(ticketId, ticket.assignee_id);
     res.status(HttpStatus.CREATED).end();
+  }
+
+  @Roles(Role.ADMIN)
+  @Get()
+  async findAll(@Res() res: Response): Promise<void> {
+    const tickets = await this.ticketService.findAll();
+    res.status(HttpStatus.OK).json(tickets).end();
   }
 }

@@ -32,15 +32,7 @@ const roleGuard = {
     }),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    UserService,
-    UserRepository,
-    UserConverter,
-    DatabaseClient,
-    appGuard,
-    roleGuard,
-  ],
+  providers: [AuthService, DatabaseClient, appGuard, roleGuard],
   exports: [AuthService],
 })
 export class AuthModule {}

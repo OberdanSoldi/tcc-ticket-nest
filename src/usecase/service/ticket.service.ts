@@ -78,4 +78,11 @@ export class TicketService {
       );
     }
   }
+
+  async findAll() {
+    const tickets = await this.ticketRepository.findAll();
+    return tickets.map((it) => {
+      return this.ticketConverter.toResponse(it);
+    });
+  }
 }
