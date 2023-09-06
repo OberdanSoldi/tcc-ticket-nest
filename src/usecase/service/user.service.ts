@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { TicketRepository } from '../../adapter/repository/ticket.repository';
 import { TicketConverter } from '../converter/ticket.converter';
 import { TicketResponseDto } from '../../domain/dto/response/ticket/ticketResponse.dto';
+import { EmailOrPasswordIncorrectException } from '../exceptions/EmailOrPasswordIncorrectException';
 
 @Injectable()
 export class UserService {
@@ -29,9 +30,11 @@ export class UserService {
   }
 
   async findOne(email: string): Promise<UserResponseDto> {
-    return this.userConverter.toResponse(
-      await this.userRepository.findOne(email),
-    );
+    const user = await this.userRepository.findOne(email);
+    if (!user) {
+      throw new EmailOrPasswordIncorrectException();
+    }
+    return this.userConverter.toResponse(user);
   }
 
   async findAllUserTickets(userId: string): Promise<TicketResponseDto[]> {

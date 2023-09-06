@@ -11,6 +11,7 @@ import * as process from 'process';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+    cors: false,
   });
 
   const swaggerOptions: SwaggerDocumentOptions = {
@@ -32,7 +33,7 @@ async function bootstrap() {
 
   sendgridEmail.setApiKey(process.env.EMAIL_API_SECRET);
 
-  await app.listen(3000);
+  await app.listen(3005);
 }
 
 bootstrap();
