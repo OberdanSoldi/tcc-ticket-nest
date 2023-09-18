@@ -16,4 +16,10 @@ export class AuthController {
     const accessToken = await this.authService.signIn(signIn);
     res.status(HttpStatus.OK).json(accessToken).end();
   }
+
+  @Public()
+  @Post('forgot-password')
+  async forgotPassword() {
+    console.log('forgot-password');
+  }
 }

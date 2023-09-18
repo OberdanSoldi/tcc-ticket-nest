@@ -5,12 +5,15 @@ import * as bcrypt from 'bcrypt';
 import { SignInRequestDto } from '../../domain/dto/request/signIn/signInRequest.dto';
 import { AccessToken } from '../../domain/@types/AccessToken';
 import { EmailOrPasswordIncorrectException } from '../exceptions/EmailOrPasswordIncorrectException';
+import { ForgotPasswordDto } from '../../domain/dto/request/forgotPassword/forgotPassword.dto';
+import { MailService } from './mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async signIn(userRequest: SignInRequestDto): Promise<AccessToken> {
@@ -29,5 +32,9 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async forgotPassword(userRequest: ForgotPasswordDto): Promise<void> {
+    const user = await this.userService.findOne(userRequest.email);
   }
 }

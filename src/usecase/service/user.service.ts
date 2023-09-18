@@ -43,4 +43,11 @@ export class UserService {
       return this.ticketConverter.toResponse(it);
     });
   }
+
+  async findAllUsers(): Promise<UserResponseDto[]> {
+    const tickets = await this.userRepository.findAll();
+    return tickets.map((it) => {
+      return this.userConverter.toResponse(it);
+    });
+  }
 }

@@ -31,4 +31,15 @@ export class UserController {
     delete user.password;
     res.status(HttpStatus.OK).json(user).end();
   }
+
+  @Roles(Role.ADMIN)
+  @Get()
+  async findAll(@Res() res: Response): Promise<void> {
+    const users = await this.userService.findAllUsers();
+    const usersWithoutPassword = users.map((it) => {
+      delete it.password;
+      return it;
+    });
+    res.status(HttpStatus.OK).json(usersWithoutPassword).end();
+  }
 }

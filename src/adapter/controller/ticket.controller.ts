@@ -9,7 +9,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { TicketService } from '../../usecase/service/ticket.service';
 import { Request, Response } from 'express';
 import { TicketRequestDto } from '../../domain/dto/request/ticket/ticketRequest.dto';
@@ -18,7 +18,6 @@ import { Role } from '../../domain/enum/role.enum';
 import { TicketStatusRequestDto } from '../../domain/dto/request/ticket/ticketStatusRequest.dto';
 import { TicketPriorityRequestDto } from '../../domain/dto/request/ticket/ticketPriorityRequest.dto';
 import { TicketAssigneeRequestDto } from '../../domain/dto/request/ticket/TicketAssigneeRequest.dto';
-import { TicketResponseDto } from '../../domain/dto/response/ticket/ticketResponse.dto';
 
 @ApiTags('ticket')
 @Controller('ticket')
