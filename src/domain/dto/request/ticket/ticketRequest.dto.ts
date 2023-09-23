@@ -1,7 +1,9 @@
-import { Priority, Status } from '@prisma/client';
+import { Priority, ProblemType, Status } from '@prisma/client';
 
 export class TicketRequestDto {
+  problemType: ProblemType;
   description: string;
+  title: string;
   date: Date;
   status: Status;
   priority: Priority;

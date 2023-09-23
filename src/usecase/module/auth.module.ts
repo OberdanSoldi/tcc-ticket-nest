@@ -9,6 +9,7 @@ import { AuthGuard } from '../guard/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from '../guard/role.guard';
 import { MailModule } from './mail.module';
+import { AuthRepository } from '../../adapter/repository/auth.repository';
 
 const appGuard = {
   provide: APP_GUARD,
@@ -31,7 +32,7 @@ const roleGuard = {
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, DatabaseClient, appGuard, roleGuard],
+  providers: [AuthService, DatabaseClient, appGuard, roleGuard, AuthRepository],
   exports: [AuthService],
 })
 export class AuthModule {}

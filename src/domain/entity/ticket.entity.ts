@@ -1,7 +1,9 @@
-import { Priority, Status, Ticket } from '@prisma/client';
+import { Priority, ProblemType, Status, Ticket } from '@prisma/client';
 
 export interface TicketEntity extends Ticket {
+  problemType: ProblemType;
   id: string;
+  title: string;
   description: string;
   date: Date;
   status: Status;

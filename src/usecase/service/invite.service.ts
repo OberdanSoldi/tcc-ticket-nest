@@ -29,7 +29,11 @@ export class InviteService {
       const inviteHash = await HashGenerator.generate();
       const convertedInvite = this.inviteConverter.toEntity(invite, inviteHash);
       await this.inviteRepository.create(convertedInvite);
-      await this.mailService.sendEMail(convertedInvite.email, inviteHash);
+      await this.mailService.sendEMail(
+        convertedInvite.email,
+        inviteHash,
+        'Invite',
+      );
     } catch (ex) {
       this.logger.error(`Error on ${InviteService.name}, EX: ${ex}`);
       throw new InviteFailedException();

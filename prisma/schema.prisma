@@ -20,7 +20,7 @@ model User {
   password       String
   role           Role
   ticketCreator  Ticket[] @relation("creator")
-  ticketAssignee Ticket?  @relation("assignee")
+  ticketAssignee Ticket[] @relation("assignee")
 }
 
 model Invite {
@@ -33,16 +33,26 @@ model Invite {
 }
 
 model Ticket {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  description String   @db.String()
-  date        DateTime @default(now()) @db.Timestamptz(6)
-  status      Status   @default(NOT_DEFINED)
-  priority    Priority @default(NOT_DEFINED)
-  creator     User     @relation(fields: [created_by], references: [id], "creator")
-  assignee    User?    @relation(fields: [assigned_to], references: [id], "assignee")
-  created_by  String   @db.Uuid
-  assigned_to String?  @unique @db.Uuid
-  computer_id String   @db.String(100)
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  description String      @db.String()
+  title       String      @db.String()
+  date        DateTime    @default(now()) @db.Timestamptz(6)
+  status      Status      @default(NOT_DEFINED)
+  priority    Priority    @default(NOT_DEFINED)
+  creator     User        @relation(fields: [created_by], references: [id], "creator")
+  assignee    User?       @relation(fields: [assigned_to], references: [id], "assignee")
+  created_by  String      @db.Uuid
+  assigned_to String?     @db.Uuid
+  computer_id String      @db.String(100)
+  problemType ProblemType @default(OTHER)
+}
+
+model ResetPasswordRequest {
+  id     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date   DateTime @default(now()) @db.Timestamptz(6)
+  hash   String
+  email  String
+  isUsed Boolean  @default(false)
 }
 
 enum InviteStatus {
@@ -69,4 +79,11 @@ enum Priority {
   MEDIUM
   LOW
   NOT_DEFINED
+}
+
+enum ProblemType {
+  HARDWARE
+  SOFTWARE
+  NETWORK
+  OTHER
 }

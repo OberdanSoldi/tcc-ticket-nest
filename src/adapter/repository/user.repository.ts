@@ -25,4 +25,11 @@ export class UserRepository {
   async findAll(): Promise<UserEntity[]> {
     return this.prisma.user.findMany();
   }
+
+  async updateUserPassword(password: string, id: string) {
+    await this.prisma.user.update({
+      where: { id: id },
+      data: { password: password },
+    });
+  }
 }

@@ -16,10 +16,12 @@ export class TicketConverter
       computer_id: request.computer_id,
       date: request.date,
       status: request.status,
-      assigned_to: request.assigned_to,
+      assigned_to: request.assigned_to || null,
       created_by: request.created_by,
       description: request.description,
       priority: request.priority,
+      title: request.title,
+      problemType: request.problemType,
     };
   }
 
@@ -33,6 +35,8 @@ export class TicketConverter
       created_by: entity.created_by,
       description: entity.description,
       priority: entity.priority,
+      title: entity.title,
+      problemType: entity.problemType,
     };
   }
 }
