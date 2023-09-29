@@ -6,6 +6,7 @@ import { FailCreateTicketException } from '../exceptions/FailCreateTicketExcepti
 import { Priority, Status } from '@prisma/client';
 import { FailChangeTicketException } from '../exceptions/FailChangeTicketException';
 import { TicketResponseDto } from '../../domain/dto/response/ticket/ticketResponse.dto';
+import { FailDeleteTicketException } from '../exceptions/FailDeleteTicketException';
 
 @Injectable()
 export class TicketService {
@@ -84,5 +85,14 @@ export class TicketService {
     return tickets.map((it) => {
       return this.ticketConverter.toResponse(it);
     });
+  }
+
+  async deleteTicket(id: string) {
+    try {
+      await this.ticketRepository.deleteTicket(id);
+    } catch (ex) {
+      this.logger.error(`Error on ${TicketService.name}, EX: ${ex}`);
+      throw new FailDeleteTicketException();
+    }
   }
 }

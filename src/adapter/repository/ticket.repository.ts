@@ -52,4 +52,8 @@ export class TicketRepository {
   async findAll(): Promise<TicketEntity[]> {
     return this.prisma.ticket.findMany();
   }
+
+  async deleteTicket(id: string): Promise<void> {
+    await this.prisma.ticket.delete({ where: { id: id } });
+  }
 }

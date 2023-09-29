@@ -68,7 +68,7 @@ enum Role {
 
 enum Status {
   OPEN
-  ASSIGNED
+  IN_PROGRESS
   CLOSED
   NOT_DEFINED
 }

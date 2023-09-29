@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -83,5 +84,15 @@ export class TicketController {
   async findAll(@Res() res: Response): Promise<void> {
     const tickets = await this.ticketService.findAll();
     res.status(HttpStatus.OK).json(tickets).end();
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete('/:id')
+  async deleteTicket(
+    @Res() res: Response,
+    @Param('id') id: string,
+  ): Promise<void> {
+    await this.ticketService.deleteTicket(id);
+    res.status(HttpStatus.OK).end();
   }
 }
