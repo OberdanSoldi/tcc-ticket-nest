@@ -46,7 +46,7 @@ export class TicketController {
     res.status(HttpStatus.OK).json(ticket).end();
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.TECHNICIAN)
   @Patch('/status/:id')
   async changeTicketStatus(
     @Res() res: Response,

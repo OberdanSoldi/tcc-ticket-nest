@@ -1,4 +1,12 @@
-import { Controller, Get, HttpStatus, Param, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../usecase/service/user.service';
 import { Request, Response } from 'express';
@@ -41,5 +49,15 @@ export class UserController {
       return it;
     });
     res.status(HttpStatus.OK).json(usersWithoutPassword).end();
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete('/:id')
+  async deleteUser(
+    @Res() res: Response,
+    @Param('id') id: string,
+  ): Promise<void> {
+    await this.userService.deleteUser(id);
+    res.status(HttpStatus.OK).end();
   }
 }
