@@ -57,7 +57,7 @@ export class TicketController {
     res.status(HttpStatus.CREATED).end();
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.TECHNICIAN)
   @Patch('/priority/:id')
   async chanceTicketPriority(
     @Res() res: Response,
@@ -79,7 +79,7 @@ export class TicketController {
     res.status(HttpStatus.CREATED).end();
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.TECHNICIAN)
   @Get()
   async findAll(@Res() res: Response): Promise<void> {
     const tickets = await this.ticketService.findAll();

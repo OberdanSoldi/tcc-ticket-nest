@@ -41,6 +41,7 @@ export class UserService {
   async findOne(email: string): Promise<UserResponseDto> {
     try {
       const user = await this.userRepository.findOne(email);
+
       if (!user) {
         throw new EmailOrPasswordIncorrectException();
       }

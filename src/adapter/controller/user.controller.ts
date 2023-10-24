@@ -29,7 +29,7 @@ export class UserController {
     res.status(HttpStatus.OK).json(tickets).end();
   }
 
-  @Roles(Role.TECHNICIAN, Role.ADMIN)
+  @Roles(Role.TECHNICIAN, Role.ADMIN, Role.USER)
   @Get('/:id')
   async findById(
     @Res() res: Response,
@@ -40,7 +40,7 @@ export class UserController {
     res.status(HttpStatus.OK).json(user).end();
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER, Role.TECHNICIAN)
   @Get()
   async findAll(@Res() res: Response): Promise<void> {
     const users = await this.userService.findAllUsers();
