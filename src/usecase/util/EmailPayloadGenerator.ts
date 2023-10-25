@@ -6,12 +6,18 @@ import { createHtml } from './CreteHtmlString';
 class EmailPayloadGenerator {
   private from_email: string = process.env.FROM_EMAIL;
 
-  private generateHtmlToInvite(email: string, hash: string): string {
-    return createHtml('Convite de Acesso', hash);
+  private generateHtmlToInvite(
+    hash: string,
+    templateModel: TemplateModel,
+  ): string {
+    return createHtml('Convite de Acesso', hash, templateModel);
   }
 
-  private generateHtmlToResetPassword(email: string, hash: string): string {
-    return createHtml('Troca de senha', hash);
+  private generateHtmlToResetPassword(
+    hash: string,
+    templateModel: TemplateModel,
+  ): string {
+    return createHtml('Troca de senha', hash, templateModel);
   }
 
   public createPayload(
@@ -19,26 +25,24 @@ class EmailPayloadGenerator {
     hash: string,
     type: TemplateModel,
   ): EmailPayload {
-    const invitePayload = {
-      to: email,
-      from: this.from_email,
-      subject: 'Convite de Acesso',
-      text: 'Convite de Acesso',
-      html: this.generateHtmlToInvite(email, hash),
-    };
-
-    const resetPasswordPayload = {
-      to: email,
-      from: this.from_email,
-      subject: 'Troca de senha',
-      text: 'Troca de senha',
-      html: this.generateHtmlToResetPassword(email, hash),
-    };
-
     switch (type) {
       case 'ResetPassword':
+        const resetPasswordPayload = {
+          to: email,
+          from: this.from_email,
+          subject: 'Troca de senha',
+          text: 'Troca de senha',
+          html: this.generateHtmlToResetPassword(hash, type),
+        };
         return resetPasswordPayload;
       case 'Invite':
+        const invitePayload = {
+          to: email,
+          from: this.from_email,
+          subject: 'Convite de Acesso',
+          text: 'Convite de Acesso',
+          html: this.generateHtmlToInvite(hash, type),
+        };
         return invitePayload;
     }
   }
