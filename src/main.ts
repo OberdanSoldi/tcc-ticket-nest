@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+require('newrelic');
 import * as sendgridEmail from '@sendgrid/mail';
 import { AppModule } from './usecase/module/app.module';
 import {
@@ -7,11 +8,14 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import * as process from 'process';
+import { NewrelicInterceptor } from './usecase/interceptors/newrelic.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
+
+  app.useGlobalInterceptors(new NewrelicInterceptor());
 
   app.enableCors({
     origin: '*',
