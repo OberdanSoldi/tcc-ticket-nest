@@ -39,7 +39,7 @@ async function bootstrap() {
 
   sendgridEmail.setApiKey(process.env.EMAIL_API_SECRET);
 
-  await app.listen(3005);
+  await app.listen(process.env.PORT || 3005);
 }
 
 bootstrap();
