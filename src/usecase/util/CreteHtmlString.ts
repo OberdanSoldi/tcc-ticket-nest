@@ -14,7 +14,7 @@ export function createHtml(
       url = '/auth/invite/' + hash;
       break;
     case 'ResetPassword':
-      url = '/auth/reset-password' + hash;
+      url = '/auth/reset-password/' + hash;
       break;
   }
 
