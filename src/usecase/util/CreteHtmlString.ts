@@ -7,6 +7,8 @@ export function createHtml(
 ) {
   let url = '';
 
+  const baseUrl = process.env.BASE_URL;
+
   switch (templateModel) {
     case 'Invite':
       url = '/auth/invite/' + hash;
@@ -47,7 +49,7 @@ export function createHtml(
                           <td style="text-align: center;border-left: 1px solid;border-right: 1px solid;">
                               <hr style="width: 300px;border: 1px solid rgba(193, 193, 204, 0.5);">
                               <h1 style="color: #FFFFFF; font-family: 'Montserrat', sans-serif;">${message}</h1>
-                              <button style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;padding: 15px 100px;color: #FFFFFF;background-color: #8257E5;border: 0px;border-radius: 10px;margin-bottom: 10px;"><a style="outline: none; color: #fff; text-decoration: none;" href="http://localhost:3000/${url}">Acessar</a></button>
+                              <button style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;padding: 15px 100px;color: #FFFFFF;background-color: #8257E5;border: 0px;border-radius: 10px;margin-bottom: 10px;"><a style="outline: none; color: #fff; text-decoration: none;" href="${baseUrl}/${url}">Acessar</a></button>
                               <hr style="width: 300px;border: 1px solid rgba(193, 193, 204, 0.5);">
                           </td>
                       </tr>
