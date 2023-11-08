@@ -51,7 +51,7 @@ export class UserController {
     res.status(HttpStatus.OK).json(usersWithoutPassword).end();
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.TECHNICIAN)
   @Delete('/:id')
   async deleteUser(
     @Res() res: Response,
